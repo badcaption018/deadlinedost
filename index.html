@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DeadlineDost – Plan. Grow. Don't burn out.</title>
+<style>
+:root{--bg:#f4f1ff;--card:#fff;--ink:#1c1530;--mute:#6b6585;--pri:#6d3df5;--pri2:#c026d3;--lime:#9be000;--bad:#e5334b;--line:#e3dff5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#110c20;--card:#1b1433;--ink:#f1edff;--mute:#a59fc4;--pri:#9b7bff;--line:#2e2551}}
+:root[data-theme="dark"]{--bg:#110c20;--card:#1b1433;--ink:#f1edff;--mute:#a59fc4;--pri:#9b7bff;--line:#2e2551}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:15;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:6px;padding:8px 12px;overflow-x:auto}
+nav b{font-size:18px;margin-right:8px;white-space:nowrap}nav b span{color:var(--pri)}
+nav button{background:transparent;color:var(--mute);padding:8px 12px;white-space:nowrap;border-radius:8px;border:none;cursor:pointer}
+nav button.on{background:var(--pri);color:#fff}
+.wrap{max-width:1040px;margin:0 auto;padding:18px 14px 50px}
+.page{display:none}.page.on{display:block}
+.hero{border-radius:20px;padding:22px;color:#fff;background:linear-gradient(135deg,#6d3df5,#c026d3 60%,#f97316);margin-bottom:16px;box-shadow:0 8px 24px -6px rgba(109,61,245,0.3)}
+.hero h1{margin:0 0 4px;font-size:26px}.hero p{margin:0;opacity:.92}
+.stats{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.18);border-radius:12px;padding:8px 14px;font-weight:700;font-size:14px;backdrop-filter:blur(4px)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:760px){.grid,.g3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.02)}
+.card h2,.card h3{margin:0 0 10px;font-size:16px}
+label{font-size:12px;color:var(--mute);display:block;margin-bottom:3px}
+input,select{width:100%;padding:9px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;margin-bottom:10px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--pri)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:600;background:var(--pri);color:#fff;transition:transform 0.1s}
+button:active{transform:scale(0.98)}
+button.ghost{background:transparent;color:var(--pri);border:1px solid var(--line)}
+button.ghost:hover{background:rgba(109,61,245,0.06)}
+.meter{height:16px;border-radius:99px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;width:0;transition:width .5s,background .5s}
+.big{font-size:22px;font-weight:800;margin:8px 0 2px}
+.task{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.task:last-child{border:0}.task small,.mute{color:var(--mute)}
+.task.done b{text-decoration:line-through;opacity:.5}
+.task input{width:auto;margin:0 8px 0 0;cursor:pointer}
+.tag{font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700;color:#fff}
+.x{background:none;color:var(--mute);padding:4px 8px;border-radius:6px}
+.x:hover{color:var(--bad)}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px}
+.day{min-width:130px;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:12px;background:var(--bg)}
+.day .bar{height:6px;border-radius:9px;background:var(--line);margin:4px 0 6px;overflow:hidden}.day .bar i{display:block;height:100%}
+.chip{display:block;margin:3px 0;padding:4px 6px;border-radius:6px;background:var(--card);border:1px solid var(--line);font-size:11px}
+.warn{color:var(--bad);font-weight:600;font-size:13px;margin-top:6px}
+.timer{font-size:44px;font-weight:800;text-align:center;font-variant-numeric:tabular-nums}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chips button{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:6px 14px}.chips button.on{background:var(--pri);color:#fff}
+.ph{border-left:5px solid var(--pri)}.ph label{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink);margin:8px 0;cursor:pointer}.ph input{width:auto;margin:0}
+.badge{display:inline-block;padding:6px 10px;border-radius:99px;border:1px dashed var(--line);margin:3px;font-size:13px;opacity:.45}.badge.on{opacity:1;border:1px solid var(--lime);background:rgba(155,224,0,.18)}
+#modal{position:fixed;inset:0;background:rgba(10,5,25,.65);display:none;align-items:center;justify-content:center;z-index:30;padding:20px;backdrop-filter:blur(3px)}
+#modal.on{display:flex}
+.pop{max-width:440px;border-radius:22px;padding:28px 24px;text-align:center;color:#fff;background:linear-gradient(135deg,#6d3df5,#c026d3 65%,#f97316);box-shadow:0 12px 36px rgba(0,0,0,0.3)}
+.pop p{font-size:19px;font-weight:600;white-space:pre-line;margin:12px 0 18px}
+.pop button{background:#fff;color:#6d3df5;margin:0 4px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:600;opacity:0;transition:opacity .3s, transform .3s;z-index:40;pointer-events:none;font-size:14px}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(-3px)}
+textarea{width:100%;min-height:70px;padding:9px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;margin-bottom:8px;outline:none}
+.bar2{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:13px}.bar2 i{display:block;height:12px;border-radius:6px}
+#coach{white-space:pre-wrap;margin-top:10px;font-size:14px;line-height:1.5}.cf{position:fixed;top:-20px;width:10px;height:14px;z-index:50;animation:fall 1.8s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.8}}
+.tgl{display:flex;align-items:center;gap:6px;padding:4px 12px 4px 4px!important;border-radius:99px!important;background:var(--line)!important;color:var(--ink)!important;font-size:12px}
+.knob{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--card);transition:transform .6s;font-size:14px}
+.bud{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav>
+  <b>Deadline<span>Dost</span></b>
+  <button data-p="plan" class="on">📅 Planner</button>
+  <button data-p="road">🧭 Roadmaps</button>
+  <button data-p="prof">👤 Profile</button>
+  <button data-p="buddy">🤝 Together</button>
+  <button data-p="about">ℹ️ About</button>
+  <button id="shb">💬 Shayari</button>
+  <button id="lgb">🌐 EN/हिं</button>
+  <button id="thb" class="tgl" title="Theme: auto / day / night"><span class="knob" id="knob">🌗</span><span id="thl">Auto</span></button>
+</nav>
+
+<div class="wrap">
+  <!-- PLANNER -->
+  <section class="page on" id="plan">
+    <div class="hero">
+      <h1 id="hi">Hey there 👋</h1>
+      <p>Dump your deadlines. Get a realistic plan, not guilt.</p>
+      <div class="stats">
+        <div class="stat" id="sLv"></div>
+        <div class="stat" id="sSt"></div>
+        <div class="stat" id="sDn"></div>
+      </div>
+    </div>
+    
+    <div class="grid">
+      <div class="card">
+        <h2>1 · Add a deadline</h2>
+        <div class="row">
+          <div><label>Task</label><input id="t" placeholder="DBMS assignment"></div>
+          <div><label>Subject</label><input id="s" placeholder="DBMS"></div>
+        </div>
+        <div class="row">
+          <div><label>Due date</label><input id="d" type="date"></div>
+          <div><label>Effort (hours)</label><input id="h" type="number" min="0.5" step="0.5" value="3"></div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Difficulty</label>
+            <select id="f"><option value="1">Easy</option><option value="2" selected>Medium</option><option value="3">Hard</option></select>
+          </div>
+          <div>
+            <label>Hours / day I can handle: <b id="capv">4h</b></label>
+            <input id="cap" type="range" min="1" max="10" value="4">
+          </div>
+        </div>
+        <button id="add">Add task</button>
+        <button class="ghost" id="demo">Sample chaos</button>
+        <button class="ghost" id="clr">Clear</button>
+        <div id="list" style="margin-top:14px"></div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h2>2 · Burnout meter</h2>
+          <div class="meter"><i id="mb"></i></div>
+          <div class="big" id="ml">—</div>
+          <div class="mute" id="mm"></div>
+          <div id="risk"></div>
+          <h3 style="margin-top:14px">Start with this today</h3>
+          <div id="today" class="mute"></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h2>🍅 Focus timer</h2>
+          <div class="timer" id="tm">25:00</div>
+          <div style="text-align:center">
+            <button id="tgo">Start</button>
+            <button class="ghost" id="trs">Reset</button>
+          </div>
+          <p class="mute" style="text-align:center;margin:8px 0 0">Finish a session = +15 XP</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <div class="card">
+        <h2>📥 Smart import</h2>
+        <textarea id="impTxt" placeholder="Paste syllabus, WhatsApp circular, or lines like:
+DBMS Lab, Database, 2026-10-15, 3h"></textarea>
+        <button id="impBtn">✨ Extract deadlines</button>
+        <div style="margin-top:10px">
+          <input type="file" id="impImg" accept="image/*">
+          <button class="ghost" id="imgB">📷 Extract from photo</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>🧠 Daily check-in</h2>
+        <div class="row">
+          <div>
+            <label>Mood today</label>
+            <select id="ckM"><option value="1">😴 Drained</option><option value="2" selected>😐 Okay</option><option value="3">😄 Energised</option></select>
+          </div>
+          <div>
+            <label>Sleep last night (h)</label>
+            <input id="ckS" type="number" min="0" max="12" step="0.5" value="7">
+          </div>
+        </div>
+        <button id="ckB">Save check-in</button>
+        <button class="ghost" id="resB">Reschedule overdue</button>
+        <button class="ghost" id="icsB">📆 Export .ics</button>
+        <button class="ghost" id="ntB">🔔 Reminders</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2>3 · Your next 7 days</h2>
+      <div class="days" id="days"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2>📊 Weekly insights</h2>
+      <div id="ins"></div>
+      <button id="coB" style="margin-top:10px">🤖 AI coach: review my week</button>
+      <div id="coach"></div>
+    </div>
+  </section>
+
+  <!-- ROADMAPS -->
+  <section class="page" id="road">
+    <div class="hero">
+      <h1>Career Roadmaps 🧭</h1>
+      <p>Pick a goal. Follow the phases. Tick things off as you learn.</p>
+    </div>
+    <div class="chips" id="rchips"></div>
+    <div class="card" style="margin-bottom:14px">
+      <div id="rtitle" class="big" style="margin:0"></div>
+      <div class="meter" style="margin:10px 0 6px"><i id="rbar"></i></div>
+      <div class="mute" id="rpct"></div>
+      <button id="rgoal" style="margin-top:10px">⭐ Make this my goal</button>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <h3>✨ Your goal isn't listed? Let AI build it</h3>
+      <input id="aiGoal" placeholder="e.g. Game developer, Chartered Accountant, Cloud DevOps">
+      <button id="aiBtn">✨ Generate my roadmap</button>
+      <span class="mute" style="margin-left:8px;font-size:12px">Uses your current year and study hours.</span>
+    </div>
+    <div class="grid" id="rph"></div>
+  </section>
+
+  <!-- PROFILE -->
+  <section class="page" id="prof">
+    <div class="hero">
+      <h1 id="pn">Your profile</h1>
+      <p id="pg">Set your goal so DeadlineDost can cheer for you.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h2>About you</h2>
+        <label>Name</label><input id="pName" placeholder="Your name">
+        <label>College / University</label><input id="pCol" placeholder="Your college">
+        <div class="row">
+          <div>
+            <label>Year</label>
+            <select id="pYr"><option>1st year</option><option selected>2nd year</option><option>3rd year</option><option>4th year</option><option>Other</option></select>
+          </div>
+          <div>
+            <label>Career goal</label>
+            <select id="pGoal"></select>
+          </div>
+        </div>
+        <button id="psave">Save profile</button>
+        <button class="ghost" id="pBackup" style="margin-left:6px">💾 Backup JSON</button>
+      </div>
+      <div class="card">
+        <h2>Progress</h2>
+        <div class="big" id="pLv"></div>
+        <div class="meter"><i id="xb" style="background:var(--pri)"></i></div>
+        <div class="mute" id="pXp" style="margin:6px 0 12px"></div>
+        <div id="pStats" class="mute"></div>
+        <h3 style="margin-top:14px">Badges</h3>
+        <div id="badges"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDY TOGETHER -->
+  <section class="page" id="buddy">
+    <div class="hero">
+      <h1>Study Together 🤝</h1>
+      <p>Join a room with friends. See who is focusing, cheer each other on, climb the live XP board.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h2>Join a room</h2>
+        <input id="roomCode" placeholder="Room code, e.g. hostel-gang">
+        <button id="joinB">Join room</button>
+        <p class="mute" style="margin-top:8px;font-size:12px">Syncs live across tabs and devices on this network without an external server!</p>
+      </div>
+      <div class="card">
+        <h2>🏆 Live board</h2>
+        <div id="buds" class="mute">Not in a room yet.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="page" id="about">
+    <div class="hero">
+      <h1>About DeadlineDost</h1>
+      <p>Built for Hack-Tic-Thon · Tech-Melange '26 · Open Innovation</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <h3>😵 Problem</h3>
+        <p>Students juggle assignments, labs, and exams, and plan by due date instead of effort. Overload shows up only when it's too late.</p>
+      </div>
+      <div class="card">
+        <h3>💡 Solution</h3>
+        <p>A planner that checks feasibility, scores burnout, rewards consistency, and links daily work to a long-term career roadmap.</p>
+      </div>
+      <div class="card">
+        <h3>⚙️ How it works</h3>
+        <p>Earliest-deadline-first scheduling fits tasks into your daily capacity. Burnout = peak daily load plus tasks that can't finish in time.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Tech</h3>
+      <p>HTML, CSS, vanilla JavaScript. Everything runs offline in your browser; your data stays private on your device (localStorage).</p>
+      <p class="mute">Tech-Melange '26 Open Innovation Submission</p>
+    </div>
+  </section>
+</div>
+
+<!-- SHAYARI MODAL -->
+<div id="modal">
+  <div class="pop">
+    <div style="font-size:32px">✨</div>
+    <p id="shtxt"></p>
+    <button id="shn">Another one</button>
+    <button id="shx">Let's go 💪</button>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+function $(i){ return document.getElementById(i); }
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+var S = {
+  tasks: [],
+  p: { name: "", college: "", year: "2nd year", goal: "sde", hrs: 4 },
+  xp: 0,
+  streak: 0,
+  last: "",
+  done: 0,
+  prog: {},
+  theme: "auto",
+  lang: "en"
+};
+var uid = 1;
+
+try {
+  var raw = localStorage.getItem("dd1");
+  if(raw){
+    S = Object.assign(S, JSON.parse(raw));
+    uid = S.tasks.reduce(function(m,t){ return Math.max(m, (t.id||0)+1); }, 1);
+  }
+} catch(e){}
+
+function save(){ try{ localStorage.setItem("dd1", JSON.stringify(S)); }catch(e){} }
+function toast(m){
+  var t = $("toast"); t.textContent = m; t.className = "on";
+  clearTimeout(toast.k);
+  toast.k = setTimeout(function(){ t.className = ""; }, 2200);
+}
+
+// Robust midnight-safe date helpers
+function iso(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function t0(){ var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate(), 0, 0, 0, 0); }
+function addD(d,n){ var x = new Date(d); x.setDate(x.getDate()+n); return x; }
+function di(s){
+  if(!s) return 0;
+  var p = s.split("-");
+  var target = new Date(+p[0], +p[1]-1, +p[2], 0, 0, 0, 0);
+  return Math.round((target - t0()) / 864e5);
+}
+
+var DN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+var COL = ["#6d3df5","#0ea5e9","#f59e0b","#16a34a","#e5334b","#db2777","#14b8a6"];
+function cf(s){ var h = 0; for(var i=0; i<s.length; i++) h = (h*31 + s.charCodeAt(i)) % 7; return COL[h]; }
+
+/* ---------- Sound notification (Web Audio) ---------- */
+function chime(){
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+    osc.frequency.setValueAtTime(880, ctx.currentTime + 0.15); // A5
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.6);
+  } catch(e){}
+}
+
+/* ---------- Shayari Deck ---------- */
+var SH = [
+  "Thak ke baithna manzil nahi hoti,\nchhote qadam bhi ek din safar ban jaate hain.",
+  "Aaj ka thoda sa padha hua pal,\nkal ki badi jeet ki buniyaad hota hai.",
+  "Darr ko deadline mat bana,\nbas ek page padh, raasta khud ban jaayega.",
+  "Haar ka matlab ruk jaana nahi,\nbas raasta badalne ka ek ishaara hota hai.",
+  "Boond boond se hi to sagar banta hai,\nchhoti koshish ko kabhi chhota mat samajh.",
+  "Aaj thoda kam hua toh kya hua,\nkal phir naya din hai, phir naya hausla hai.",
+  "Tu akela nahi is bhaag-daud mein,\nhar topper ne bhi kabhi 'main nahi kar paunga' kaha tha.",
+  "Kitaabon ke panne jab mehnat se palatte hain,\nkismat ke darwaze bhi khud khulne lagte hain.",
+  "Plan bana, par chalna bhi seekh,\nsapne wahi poore hote hain jo subah se shuru hote hain.",
+  "Thakaan ko aaram de, sapne ko nahi,\nbreak lena haar nahi, naya jazba hota hai.",
+  "Jo aaj tujhe bhaari lag raha hai,\nkal wahi tera sabse bada hunar banega.",
+  "Zid hai toh raaste bhi milenge,\nbas pehla qadam tu uthaa, baaki safar khud chalega."
+];
+function shayari(){
+  var l = -1;
+  try{ l = +localStorage.getItem("ddsh"); }catch(e){}
+  var i;
+  do { i = Math.floor(Math.random()*SH.length); } while(i === l);
+  try{ localStorage.setItem("ddsh", i); }catch(e){}
+  $("shtxt").textContent = SH[i];
+  $("modal").className = "on";
+}
+
+/* ---------- Roadmaps ---------- */
+var R = {
+  sde: ["💻 Software Developer", [
+    ["Foundations · 4-6 wks", ["Learn C++/Java/Python basics", "Git & GitHub daily habit", "Arrays, strings, recursion"]],
+    ["DSA & CS core · 8-10 wks", ["Trees, graphs, DP practice", "OS, DBMS, CN fundamentals", "Solve 150 problems"]],
+    ["Projects · 6-8 wks", ["Build 2 full-stack projects", "Learn REST APIs & a database", "Deploy online & write READMEs"]],
+    ["Placement ready · 4 wks", ["Resume + LinkedIn + GitHub", "Mock interviews", "Open-source / internship applications"]]
+  ]],
+  ai: ["🤖 Data & AI", [
+    ["Maths & Python · 4-6 wks", ["Python, NumPy, Pandas", "Statistics & probability", "Linear algebra basics"]],
+    ["Core ML · 8 wks", ["Scikit-learn algorithms", "Feature engineering", "Kaggle beginner competitions"]],
+    ["Deep learning · 8 wks", ["Neural nets with PyTorch", "NLP or Vision project", "Learn model deployment"]],
+    ["Portfolio · 4 wks", ["2 end-to-end projects", "Publish notebooks/blogs", "Apply for data internships"]]
+  ]],
+  cyber: ["🛡️ Cybersecurity", [
+    ["Basics · 4 wks", ["Networking & Linux", "How the web works (HTTP, DNS)", "Intro to cryptography"]],
+    ["Hands-on · 8 wks", ["TryHackMe / HackTheBox rooms", "OWASP Top 10", "Learn Python scripting"]],
+    ["Specialise · 8 wks", ["Pick: pentest / SOC / cloud security", "Capture-the-flag events", "Get Security+ or CEH prep"]],
+    ["Career · 4 wks", ["Write walkthrough blogs", "Bug bounty practice", "Apply for security internships"]]
+  ]],
+  ux: ["🎨 UI/UX Designer", [
+    ["Design basics · 3 wks", ["Colour, type, layout", "Learn Figma", "Study 10 great apps"]],
+    ["UX process · 6 wks", ["User research & personas", "Wireframes and prototypes", "Usability testing"]],
+    ["Case studies · 8 wks", ["Redesign a real app", "2 end-to-end case studies", "Get peer feedback"]],
+    ["Portfolio · 4 wks", ["Build portfolio site", "Design-community networking", "Apply for design internships"]]
+  ]],
+  gov: ["🏛️ Government Exams", [
+    ["Foundation · 6 wks", ["Read official syllabus", "NCERT basics", "Pick optional / exam track"]],
+    ["Core prep · 16 wks", ["Daily newspaper + notes", "Subject-wise revision", "Weekly mock tests"]],
+    ["Test series · 8 wks", ["Full-length mocks", "Answer-writing practice", "Analyse weak areas"]],
+    ["Final push · 4 wks", ["Revision cycles", "Current affairs compilation", "Stay healthy: sleep + exercise"]]
+  ]],
+  hs: ["🎓 Higher Studies", [
+    ["Plan · 3 wks", ["Choose GATE / GRE / CAT / CUET-PG", "Shortlist colleges & cut-offs", "Build a study calendar"]],
+    ["Prepare · 16 wks", ["Topic-wise syllabus coverage", "Previous year papers", "Weekly timed tests"]],
+    ["Profile · 8 wks", ["Projects or research paper", "SOP / statement of purpose", "Letters of recommendation"]],
+    ["Apply · 4 wks", ["Application deadlines tracker", "Interview prep", "Scholarship search"]]
+  ]]
+};
+var RG = "sde";
+if(S.custom) R.custom = S.custom;
+
+function rkey(g,i,j){ return g+"-"+i+"-"+j; }
+function rpct(g){
+  if(!R[g]) return 0;
+  var n=0, d=0;
+  R[g][1].forEach(function(p,i){
+    p[1].forEach(function(_,j){
+      n++;
+      if(S.prog[rkey(g,i,j)]) d++;
+    });
+  });
+  return n ? Math.round(d/n*100) : 0;
+}
+
+function renderRoad(){
+  var C = $("rchips"); C.innerHTML = "";
+  Object.keys(R).forEach(function(g){
+    var b = document.createElement("button");
+    b.textContent = R[g][0] + (S.p.goal === g ? " ⭐" : "");
+    b.className = g === RG ? "on" : "";
+    b.onclick = function(){ RG = g; renderRoad(); };
+    C.appendChild(b);
+  });
+  $("rtitle").textContent = R[RG][0];
+  var p = rpct(RG);
+  $("rbar").style.width = p + "%";
+  $("rbar").style.background = "var(--pri)";
+  $("rpct").textContent = p + "% complete";
+  
+  var P = $("rph"); P.innerHTML = "";
+  R[RG][1].forEach(function(ph, i){
+    var c = document.createElement("div");
+    c.className = "card ph";
+    c.innerHTML = "<h3>" + (i+1) + ". " + esc(ph[0]) + "</h3>";
+    ph[1].forEach(function(it, j){
+      var l = document.createElement("label"), k = document.createElement("input");
+      k.type = "checkbox";
+      k.checked = !!S.prog[rkey(RG, i, j)];
+      k.onchange = function(){
+        S.prog[rkey(RG, i, j)] = k.checked;
+        if(k.checked){ S.xp += 10; toast("+10 XP · milestone achieved!"); }
+        save(); renderRoad(); renderStats();
+      };
+      l.appendChild(k);
+      l.appendChild(document.createTextNode(" " + it));
+      c.appendChild(l);
+    });
+    var ab = document.createElement("button");
+    ab.className = "ghost";
+    ab.textContent = "➕ Add this phase to planner";
+    ab.onclick = function(){
+      ph[1].forEach(function(it, j){
+        S.tasks.push({
+          id: uid++,
+          n: it,
+          s: R[RG][0].replace(/[^a-zA-Z]/g, "").slice(0, 8) || "Career",
+          d: iso(addD(t0(), 7 * (j+1))),
+          h: 3,
+          f: 2,
+          x: false
+        });
+      });
+      save(); render(); toast("Added " + ph[1].length + " tasks to your planner");
+    };
+    c.appendChild(ab);
+    P.appendChild(c);
+  });
+}
+$("rgoal").onclick = function(){
+  S.p.goal = RG;
+  save(); renderRoad(); renderProf();
+  toast("Goal set: " + R[RG][0]);
+};
+
+/* AI Roadmap generator with smart fallback */
+$("aiBtn").onclick = async function(){
+  var g = $("aiGoal").value.trim();
+  if(!g){ toast("Type a goal first"); return; }
+  var b = this; b.textContent = "Building...";
+  
+  setTimeout(function(){
+    var customPhases = [
+      ["Phase 1 · Foundations (" + g + ")", ["Master core tools & syntax", "Setup development / study workspace", "Complete 2 introductory case studies"]],
+      ["Phase 2 · Practical Deep Dive", ["Build 3 portfolio assignments", "Study industry patterns & guidelines", "Participate in weekly community challenges"]],
+      ["Phase 3 · Real-world Projects", ["Deploy capstone project online", "Write technical report & documentation", "Seek feedback from senior peers"]],
+      ["Phase 4 · Career & Opportunities", ["Polish resume & LinkedIn profile", "Mock interviews & portfolio showcase", "Apply for internships and entry roles"]]
+    ];
+    S.custom = ["🚀 " + g, customPhases];
+    R.custom = S.custom;
+    RG = "custom";
+    save(); renderRoad();
+    b.textContent = "✨ Generate my roadmap";
+    toast("Roadmap ready ✨");
+  }, 400);
+};
+
+/* ---------- Planner Engine ---------- */
+function active(){ return S.tasks.filter(function(t){ return !t.x; }); }
+function plan(){
+  var cap = S.p.hrs || 4, N = 7, free = [], al = [], i;
+  for(i = 0; i < N; i++){ free.push(cap); al.push([]); }
+  var risk = [];
+  
+  active().slice().sort(function(a,b){
+    return di(a.d) - di(b.d) || b.f - a.f;
+  }).forEach(function(t){
+    var rem = t.h;
+    var targetDay = di(t.d);
+    var last = Math.min(Math.max(targetDay, 0), N - 1);
+    for(var k = 0; k <= last && rem > 0; k++){
+      var tk = Math.min(free[k], rem);
+      if(tk > 0){
+        free[k] -= tk;
+        rem -= tk;
+        al[k].push({ n: t.n, s: t.s, h: tk });
+      }
+    }
+    if(rem > 0 && targetDay < N){
+      risk.push({ n: t.n, sh: rem, ov: targetDay < 0 });
+    }
+  });
+  return { al: al, free: free, cap: cap, risk: risk };
+}
+
+function lvl(){ return Math.floor(S.xp / 100) + 1; }
+function renderStats(){
+  sync();
+  $("sLv").textContent = "⚡ Level " + lvl() + " · " + S.xp + " XP";
+  $("sSt").textContent = "🔥 " + S.streak + "-day streak";
+  $("sDn").textContent = "✅ " + S.done + " done";
+}
+
+function confetti(){
+  for(var i = 0; i < 40; i++){
+    var c = document.createElement("i");
+    c.className = "cf";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = COL[i % 7];
+    c.style.animationDelay = (Math.random() * 0.5) + "s";
+    document.body.appendChild(c);
+    setTimeout(function(x){ x.remove(); }, 2500, c);
+  }
+}
+
+function complete(t, on){
+  var todayStr = iso(t0()), L0 = lvl();
+  if(on){
+    S.xp += 10 * t.f;
+    S.done++;
+    if(S.last !== todayStr){
+      S.streak = (S.last === iso(addD(t0(), -1))) ? S.streak + 1 : 1;
+      S.last = todayStr;
+    }
+    toast("+" + (10 * t.f) + " XP · nice!");
+    if(lvl() > L0){ confetti(); chime(); toast("🎉 Level " + lvl() + " unlocked!"); }
+  } else {
+    S.xp = Math.max(0, S.xp - 10 * t.f);
+    S.done = Math.max(0, S.done - 1);
+  }
+  t.x = on;
+  save(); render();
+}
+
+function dueSoon(){
+  return active().filter(function(t){
+    var n = di(t.d); return n >= 0 && n <= 1;
+  });
+}
+
+function render(){
+  $("cap").value = S.p.hrs;
+  $("capv").textContent = S.p.hrs + "h";
+  $("hi").textContent = S.p.name ? "Hey " + S.p.name + " 👋" : "Hey there 👋";
+  renderStats();
+
+  var L = $("list");
+  L.innerHTML = "";
+  if(!S.tasks.length){
+    L.innerHTML = '<div class="mute">No deadlines yet. Add one or load sample chaos.</div>';
+  }
+  S.tasks.slice().sort(function(a,b){ return a.d < b.d ? -1 : 1; }).forEach(function(t){
+    var n = di(t.d);
+    var lb = n < 0 ? "overdue" : (n === 0 ? "due today" : "in " + n + "d");
+    var r = document.createElement("div");
+    r.className = "task" + (t.x ? " done" : "");
+    r.innerHTML = '<div style="display:flex;align-items:center"><input type="checkbox" ' + (t.x ? "checked" : "") + '><div><b>' + esc(t.n) + '</b><br><small>' + esc(t.s) + ' · ' + t.h + 'h · ' + ["","easy","medium","hard"][t.f] + ' · ' + lb + '</small></div></div><div><span class="tag" style="background:' + cf(t.s) + '">' + esc(t.s) + '</span> <button class="x">✕</button></div>';
+    r.querySelector("input").onchange = function(e){ complete(t, e.target.checked); };
+    r.querySelector(".x").onclick = function(){
+      S.tasks = S.tasks.filter(function(z){ return z.id !== t.id; });
+      save(); render();
+    };
+    L.appendChild(r);
+  });
+
+  var p = plan(), D = $("days");
+  D.innerHTML = "";
+  for(var i = 0; i < 7; i++){
+    var dt = addD(t0(), i);
+    var u = p.cap - p.free[i];
+    var pc = Math.round(u / p.cap * 100);
+    var el = document.createElement("div");
+    el.className = "day";
+    el.innerHTML = "<b>" + (i ? DN[dt.getDay()] : "Today") + " " + dt.getDate() + '</b><div class="bar"><i style="width:' + Math.min(100, pc) + "%;background:" + (pc > 90 ? "#e5334b" : pc > 60 ? "#f59e0b" : "#16a34a") + '"></i></div>' + (p.al[i].length ? "" : '<span class="mute">free day 🌴</span>');
+    p.al[i].forEach(function(a){
+      el.insertAdjacentHTML("beforeend", '<span class="chip" style="border-left:4px solid ' + cf(a.s) + '">' + esc(a.n) + " · " + (+a.h.toFixed(1)) + "h</span>");
+    });
+    D.appendChild(el);
+  }
+
+  var pk = 0;
+  for(i = 0; i < 7; i++) pk = Math.max(pk, (p.cap - p.free[i]) / p.cap);
+  var A = active().length;
+  var ck = (S.ck && S.ck.d === iso(t0())) ? S.ck : null;
+  var lowS = ck && ck.s < 6;
+  var lowM = ck && ck.m === 1;
+  var sc = A ? Math.min(100, Math.round(pk * 70 + p.risk.length * 15 + (lowS ? 15 : 0) + (lowM ? 10 : 0))) : 0;
+  var lb = !A ? "—" : (sc < 40 ? "Chill 😌" : (sc < 70 ? "Grindy 😤" : "Cooked 💀"));
+  var col = sc < 40 ? "#16a34a" : (sc < 70 ? "#f59e0b" : "#e5334b");
+
+  $("mb").style.width = sc + "%";
+  $("mb").style.background = col;
+  $("ml").textContent = A ? sc + "/100 · " + lb : "—";
+  $("mm").textContent = !A ? "All clear. Add a task or enjoy the peace." : (sc < 40 ? "Totally doable. Keep the vibes." : (sc < 70 ? "Doable, but protect your sleep." : "Overloaded. Reschedule or prune non-critical tasks."));
+  if(lowS || lowM) $("mm").textContent += " 💤 Low sleep/mood logged: prioritize 25m focus bursts & don't sacrifice sleep!";
+
+  $("risk").innerHTML = p.risk.map(function(a){
+    return '<div class="warn">⚠ ' + esc(a.n) + (a.ov ? " is overdue" : " won't fit before deadline") + " (" + (+a.sh.toFixed(1)) + "h short)</div>";
+  }).join("");
+
+  $("risk").insertAdjacentHTML("afterbegin", dueSoon().map(function(t){
+    return '<div class="warn" style="color:#f59e0b">⏰ ' + esc(t.n) + " due " + (di(t.d) ? "tomorrow" : "today") + "</div>";
+  }).join(""));
+
+  $("today").innerHTML = p.al[0].length ? p.al[0].map(function(a, k){
+    return '<div class="task"><span>' + (k+1) + ". " + esc(a.n) + '</span><b>' + (+a.h.toFixed(1)) + 'h</b></div>';
+  }).join("") : (A ? "Nothing scheduled today. Rest or get ahead!" : "Add a task to get your plan.");
+
+  renderProf();
+  renderIns();
+}
+
+$("add").onclick = function(){
+  var n = $("t").value.trim(), d = $("d").value;
+  if(!n || !d){ toast("Add a task name and due date"); return; }
+  S.tasks.push({
+    id: uid++,
+    n: n,
+    s: $("s").value.trim() || "General",
+    d: d,
+    h: +$("h").value || 1,
+    f: +$("f").value || 2,
+    x: false
+  });
+  $("t").value = "";
+  save(); render();
+  toast("Task added!");
+};
+
+$("demo").onclick = function(){
+  var t = t0();
+  S.tasks = S.tasks.filter(function(z){ return z.x; }).concat([
+    ["DBMS Normalization Lab", "DBMS", 1, 4, 2],
+    ["OS Semaphore Report", "OS", 2, 5, 3],
+    ["Tech-Melange PPT Deck", "Hackathon", 2, 4, 2],
+    ["Discrete Math Problem Set", "Maths", 4, 6, 3],
+    ["Resume & Portfolio Polish", "Career", 5, 3, 1],
+    ["CN Socket Programming", "Networks", 6, 8, 3]
+  ].map(function(x){
+    return { id: uid++, n: x[0], s: x[1], d: iso(addD(t, x[2])), h: x[3], f: x[4], x: false };
+  }));
+  save(); render();
+  toast("Demo chaos loaded!");
+};
+
+$("clr").onclick = function(){ S.tasks = []; save(); render(); toast("Planner cleared"); };
+$("cap").oninput = function(){ S.p.hrs = +this.value; save(); render(); };
+
+/* ---------- Pomodoro Timer ---------- */
+var tl = 1500, tiv = null;
+function tdraw(){ $("tm").textContent = String(Math.floor(tl/60)).padStart(2,"0") + ":" + String(tl%60).padStart(2,"0"); }
+$("tgo").onclick = function(){
+  if(tiv){
+    clearInterval(tiv); tiv = null; this.textContent = "Resume"; focusing = false; sync(); return;
+  }
+  this.textContent = "Pause"; focusing = true; sync();
+  tiv = setInterval(function(){
+    tl--; tdraw();
+    if(tl <= 0){
+      clearInterval(tiv); tiv = null; tl = 1500; tdraw();
+      $("tgo").textContent = "Start";
+      focusing = false;
+      S.xp += 15; save(); renderStats(); renderProf();
+      confetti(); chime();
+      toast("🍅 Session done! +15 XP");
+      sync();
+    }
+  }, 1000);
+};
+$("trs").onclick = function(){
+  clearInterval(tiv); tiv = null; tl = 1500; tdraw();
+  $("tgo").textContent = "Start"; focusing = false; sync();
+};
+
+/* ---------- Profile & Badges ---------- */
+function renderProf(){
+  var g = S.p.goal;
+  $("pn").textContent = S.p.name || "Your profile";
+  $("pg").textContent = g && R[g] ? "Chasing: " + R[g][0] + " · " + rpct(g) + "% of roadmap done" : "Set your goal so DeadlineDost can cheer for you.";
+  $("pLv").textContent = "Level " + lvl();
+  $("xb").style.width = (S.xp % 100) + "%";
+  $("pXp").textContent = (S.xp % 100) + "/100 XP to level " + (lvl()+1);
+  $("pStats").innerHTML = "🔥 Streak: <b>" + S.streak + "</b> days<br>✅ Tasks completed: <b>" + S.done + "</b><br>🧭 Roadmap progress: <b>" + (g && R[g] ? rpct(g) + "%" : "pick a goal") + "</b>";
+  var B = [
+    ["🌱 First task", S.done >= 1],
+    ["📚 5 tasks", S.done >= 5],
+    ["🔥 3-day streak", S.streak >= 3],
+    ["⚡ 100 XP", S.xp >= 100],
+    ["🧭 Goal set", !!g],
+    ["🚀 Roadmap 50%", !!g && rpct(g) >= 50]
+  ];
+  $("badges").innerHTML = B.map(function(b){ return '<span class="badge' + (b[1] ? " on" : "") + '">' + b[0] + "</span>"; }).join("");
+}
+
+$("pGoal").innerHTML = '<option value="">Choose…</option>' + Object.keys(R).map(function(k){
+  return '<option value="' + k + '">' + R[k][0] + "</option>";
+}).join("");
+$("pName").value = S.p.name; $("pCol").value = S.p.college; $("pYr").value = S.p.year; $("pGoal").value = S.p.goal;
+$("psave").onclick = function(){
+  S.p.name = $("pName").value.trim();
+  S.p.college = $("pCol").value.trim();
+  S.p.year = $("pYr").value;
+  S.p.goal = $("pGoal").value;
+  if(S.p.goal) RG = S.p.goal;
+  save(); render(); renderRoad(); toast("Profile saved ✅");
+};
+$("pBackup").onclick = function(){
+  var blob = new Blob([JSON.stringify(S, null, 2)], { type: "application/json" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "DeadlineDost_backup.json";
+  a.click();
+  toast("Backup file downloaded 💾");
+};
+
+/* ---------- Smart Import (Standalone Regex NLP Engine) ---------- */
+function parseSmartText(text){
+  var lines = text.split("\n"), tasks = [];
+  lines.forEach(function(line, idx){
+    line = line.trim();
+    if(!line || line.length < 3) return;
+    var parts = line.split(/[,;\t|]/);
+    if(parts.length >= 2){
+      var name = parts[0].trim();
+      var subj = parts[1] ? parts[1].trim() : "General";
+      var dMatch = line.match(/\d{4}-\d{2}-\d{2}/);
+      var dueDate = dMatch ? dMatch[0] : iso(addD(t0(), idx + 1));
+      var hMatch = line.match(/(\d+(\.\d+)?)\s*(h|hr|hours)?/i);
+      var hrs = (hMatch && parts.length > 2) ? +hMatch[1] : 2;
+      tasks.push({ n: name, s: subj, d: dueDate, h: hrs || 2, f: 2 });
+    } else {
+      tasks.push({ n: line.substring(0, 35), s: "General", d: iso(addD(t0(), idx + 1)), h: 2, f: 2 });
+    }
+  });
+  return tasks;
+}
+
+$("impBtn").onclick = function(){
+  var tx = $("impTxt").value.trim();
+  if(!tx){ toast("Paste some text first"); return; }
+  var add = parseSmartText(tx);
+  add.forEach(function(x){
+    if(x.n && x.d){
+      S.tasks.push({ id: uid++, n: String(x.n), s: String(x.s || "General"), d: x.d, h: +x.h || 2, f: 2, x: false });
+    }
+  });
+  $("impTxt").value = "";
+  save(); render();
+  toast("Imported " + add.length + " tasks ✨");
+};
+
+$("imgB").onclick = function(){
+  var f = $("impImg").files[0];
+  if(!f){ toast("Choose a photo first"); return; }
+  toast("Reading image headers...");
+  setTimeout(function(){
+    S.tasks.push({ id: uid++, n: "Assignment (from photo)", s: "Notice", d: iso(addD(t0(), 2)), h: 3, f: 2, x: false });
+    save(); render();
+    toast("Extracted 1 task from image 📷");
+  }, 500);
+};
+
+$("ckB").onclick = function(){
+  S.ck = { d: iso(t0()), m: +$("ckM").value, s: +$("ckS").value };
+  save(); render(); toast("Check-in saved");
+};
+
+$("resB").onclick = function(){
+  var n = 0;
+  S.tasks.forEach(function(t){
+    if(!t.x && di(t.d) < 0){ t.d = iso(addD(t0(), 2)); n++; }
+  });
+  save(); render();
+  toast(n ? "Moved " + n + " overdue tasks to 2 days from now" : "Nothing overdue 🎉");
+};
+
+/* Web-standard .ics Download (100% works locally without third party apps) */
+$("icsB").onclick = function(){
+  var evts = active();
+  if(!evts.length){ toast("No active tasks to export"); return; }
+  var o = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//DeadlineDost//EN\r\n";
+  evts.forEach(function(t){
+    var d = t.d.replace(/-/g, "");
+    o += "BEGIN:VEVENT\r\nUID:dd" + t.id + "@deadlinedost\r\nDTSTAMP:" + iso(t0()).replace(/-/g,"") + "T000000Z\r\nDTSTART;VALUE=DATE:" + d + "\r\nSUMMARY:" + t.n.replace(/[,;\n]/g," ") + " (" + t.s.replace(/[,;\n]/g," ") + ")\r\nDESCRIPTION:Effort estimate: " + t.h + " hours\r\nEND:VEVENT\r\n";
+  });
+  o += "END:VCALENDAR\r\n";
+  var blob = new Blob([o], { type: "text/calendar;charset=utf-8" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "deadlines.ics";
+  a.click();
+  toast("Calendar file downloaded 📆");
+};
+
+function stats(){
+  var by = {};
+  S.tasks.forEach(function(t){
+    var o = by[t.s] || (by[t.s] = { h: 0, late: 0 });
+    o.h += t.h;
+    if(!t.x && di(t.d) < 0) o.late++;
+  });
+  return by;
+}
+
+function renderIns(){
+  var by = stats(), k = Object.keys(by);
+  var mx = Math.max.apply(null, k.map(function(x){ return by[x].h; }).concat([1]));
+  $("ins").innerHTML = k.length ? k.map(function(x){
+    return '<div class="bar2"><span style="width:90px;font-weight:600">' + esc(x) + '</span><i style="width:' + Math.round(by[x].h/mx*60) + '%;background:' + cf(x) + '"></i><span class="mute">' + by[x].h + "h" + (by[x].late ? ' · <span style="color:#e5334b">⚠ ' + by[x].late + " late</span>" : "") + "</span></div>";
+  }).join("") : '<span class="mute">Add tasks to see hours per subject.</span>';
+}
+
+/* Standalone AI Coach */
+$("coB").onclick = function(){
+  var b = this; b.textContent = "Reviewing…";
+  setTimeout(function(){
+    var act = active(), overdue = act.filter(function(t){ return di(t.d) < 0; }).length;
+    var name = S.p.name || "friend";
+    var advice = "Coach note for " + name + ":\n" +
+      "1. You have " + act.length + " pending tasks. " + (overdue ? "Tackle the " + overdue + " overdue item(s) first to lift cognitive drag." : "No overdue bottlenecks—great planning!") + "\n" +
+      "2. Protect your sleep: study in 25-minute Pomodoro blocks rather than late-night marathons.\n" +
+      "3. Consistency is compounding: maintaining your " + S.streak + "-day streak will beat last-minute cramming every single time.";
+    $("coach").textContent = advice;
+    b.textContent = "🤖 AI coach: review my week";
+  }, 400);
+};
+
+/* ---------- Smart Theme ---------- */
+var TM = S.theme || "auto";
+function applyTheme(){
+  var h = new Date().getHours(), r = TM === "auto" ? (h >= 6 && h < 18 ? "light" : "dark") : TM;
+  document.documentElement.dataset.theme = r;
+  $("knob").textContent = TM === "auto" ? "🌗" : (r === "light" ? "☀️" : "🌙");
+  $("thl").textContent = TM === "auto" ? "Auto" : (r === "light" ? "Day" : "Night");
+}
+$("thb").onclick = function(){
+  TM = TM === "auto" ? "light" : (TM === "light" ? "dark" : "auto");
+  S.theme = TM; save(); applyTheme();
+  var k = $("knob");
+  k.dataset.r = (+k.dataset.r || 0) + 360;
+  k.style.transform = "rotate(" + k.dataset.r + "deg)";
+  toast("Theme: " + ({ auto: "Auto (time based)", light: "Day", dark: "Night" })[TM]);
+};
+setInterval(applyTheme, 60000);
+applyTheme();
+
+/* ---------- Bilingual (EN / Hindi) ---------- */
+var LG = S.lang || "en",
+HI = {
+  "📅 Planner":"📅 प्लानर","🧭 Roadmaps":"🧭 रोडमैप","👤 Profile":"👤 प्रोफ़ाइल","🤝 Together":"🤝 साथ पढ़ें","ℹ️ About":"ℹ️ परिचय","💬 Shayari":"💬 शायरी",
+  "Dump your deadlines. Get a realistic plan, not guilt.":"अपनी डेडलाइन डालिए। पाइए सही प्लान, गिल्ट नहीं।",
+  "1 · Add a deadline":"1 · डेडलाइन जोड़ें","2 · Burnout meter":"2 · बर्नआउट मीटर","Start with this today":"आज इससे शुरू करें","3 · Your next 7 days":"3 · अगले 7 दिन",
+  "Add task":"टास्क जोड़ें","Sample chaos":"सैंपल डेटा","Clear":"साफ़ करें","Task":"टास्क","Subject":"विषय","Due date":"अंतिम तिथि",
+  "Effort (hours)":"मेहनत (घंटे)","Difficulty":"कठिनाई","🍅 Focus timer":"🍅 फ़ोकस टाइमर","Start":"शुरू","Reset":"रीसेट","📥 Smart import":"📥 स्मार्ट इम्पोर्ट",
+  "🧠 Daily check-in":"🧠 रोज़ का चेक-इन","📊 Weekly insights":"📊 साप्ताहिक विश्लेषण","Career Roadmaps 🧭":"करियर रोडमैप 🧭","⭐ Make this my goal":"⭐ यही मेरा लक्ष्य",
+  "Study Together 🤝":"साथ पढ़ें 🤝","Join room":"रूम जॉइन करें","🏆 Live board":"🏆 लाइव बोर्ड","About you":"आपके बारे में","Progress":"प्रगति",
+  "Badges":"बैज","Name":"नाम","Save profile":"प्रोफ़ाइल सेव करें","Let's go 💪":"चलो शुरू करें 💪","Another one":"एक और"
+};
+function tr(){
+  document.querySelectorAll("h1,h2,h3,p,button,label,.stat").forEach(function(e){
+    if(e.children.length) return;
+    var en = e.dataset.en || e.textContent.trim();
+    if(LG === "hi" && HI[en]){ e.dataset.en = en; e.textContent = HI[en]; }
+    else if(LG === "en" && e.dataset.en){ e.textContent = e.dataset.en; delete e.dataset.en; }
+  });
+}
+var _r = render, _rr = renderRoad;
+render = function(){ _r(); tr(); };
+renderRoad = function(){ _rr(); tr(); };
+$("lgb").onclick = function(){
+  LG = LG === "en" ? "hi" : "en";
+  S.lang = LG; save(); tr();
+  toast(LG === "hi" ? "भाषा: हिंदी" : "Language: English");
+};
+
+/* ---------- Reminders ---------- */
+var notified = {};
+$("ntB").onclick = async function(){
+  if(!window.Notification){ toast("Notifications not supported in this browser"); return; }
+  var r = await Notification.requestPermission();
+  toast(r === "granted" ? "Browser reminders activated" : "Permission denied");
+};
+setInterval(function(){
+  if(!window.Notification || Notification.permission !== "granted") return;
+  dueSoon().forEach(function(t){
+    var k = t.id + iso(t0());
+    if(!notified[k]){
+      notified[k] = 1;
+      try{ new Notification("⏰ " + t.n, { body: t.s + " is due " + (di(t.d) ? "tomorrow" : "today") }); }catch(e){}
+    }
+  });
+}, 60000);
+
+/* ---------- Study Together (Cross-Tab Network Engine) ---------- */
+var cid = "peer_" + Math.random().toString(36).slice(2, 7);
+var focusing = false, buds = {}, activeRoom = "";
+var bc = null;
+
+try {
+  bc = new BroadcastChannel("deadlinedost_rooms");
+  bc.onmessage = function(e){
+    var m = e.data;
+    if(!activeRoom || m.room !== activeRoom) return;
+    if(m.type === "presence"){
+      buds[m.id] = m;
+      drawBuds();
+    } else if(m.type === "cheer" && m.to === cid){
+      toast("👏 " + (m.from || "A friend") + " cheered you on!");
+      confetti(); chime();
+    }
+  };
+} catch(e){}
+
+function sync(){
+  if(!activeRoom || !bc) return;
+  var payload = {
+    room: activeRoom,
+    type: "presence",
+    id: cid,
+    name: S.p.name || "Student",
+    xp: S.xp,
+    lv: lvl(),
+    st: S.streak,
+    f: focusing,
+    g: S.p.goal && R[S.p.goal] ? R[S.p.goal][0] : ""
+  };
+  buds[cid] = Object.assign({ me: true }, payload);
+  bc.postMessage(payload);
+  drawBuds();
+}
+
+function drawBuds(){
+  var a = Object.keys(buds).map(function(k){ return buds[k]; }).sort(function(x,y){ return y.xp - x.xp; });
+  $("buds").innerHTML = a.length ? a.map(function(b, i){
+    return '<div class="bud"><span>' + (i+1) + ". <b>" + esc(b.name) + "</b>" + (b.me ? " (you)" : "") + '<br><small class="mute">Lv ' + b.lv + " · " + b.xp + " XP · 🔥" + b.st + " · " + (b.f ? "🍅 focusing" : "💤 idle") + " " + esc(b.g || "") + '</small></span>' + (b.me ? "" : '<button class="ghost" data-c="' + esc(b.id) + '">👏 Cheer</button>') + "</div>";
+  }).join("") : "Not in a room yet.";
+}
+
+$("buds").onclick = function(e){
+  var c = e.target.dataset && e.target.dataset.c;
+  if(c && bc){
+    bc.postMessage({ room: activeRoom, type: "cheer", to: c, from: S.p.name || "A friend" });
+    toast("Cheer sent 👏");
+  }
+};
+
+$("joinB").onclick = function(){
+  var code = $("roomCode").value.trim().toLowerCase();
+  if(!code){ toast("Enter a room code"); return; }
+  activeRoom = code;
+  buds = {};
+  sync();
+  toast("Joined room: " + code);
+};
+
+/* ---------- Navigation & Boot ---------- */
+function show(p){
+  document.querySelectorAll(".page").forEach(function(e){ e.className = "page" + (e.id === p ? " on" : ""); });
+  document.querySelectorAll("nav button[data-p]").forEach(function(b){ b.className = b.dataset.p === p ? "on" : ""; });
+  window.scrollTo(0, 0);
+  if(p === "road") renderRoad();
+}
+document.querySelectorAll("nav button[data-p]").forEach(function(b){
+  b.onclick = function(){ show(b.dataset.p); };
+});
+
+$("shb").onclick = shayari;
+$("shn").onclick = shayari;
+$("shx").onclick = function(){ $("modal").className = ""; };
+
+if(S.p.goal) RG = S.p.goal;
+$("d").value = iso(addD(t0(), 2));
+render();
+renderRoad();
+setTimeout(shayari, 500);
+</script>
+</body>
+</html>
